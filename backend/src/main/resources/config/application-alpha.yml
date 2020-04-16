@@ -1,0 +1,22 @@
+library:
+  application-url: 'http://localhost:8080'
+  oauth:
+    web-client:
+      secret: 'library-web'
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library_vue
+    username: sa_library_vue
+    password: sa_library_vue
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  flyway:
+    enabled: false
+
+server:
+  port: 8085

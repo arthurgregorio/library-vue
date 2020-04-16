@@ -1,0 +1,106 @@
+library:
+  oauth:
+    resource-id: library-ws
+    web-client:
+      name: 'library-web'
+
+spring:
+  application.name: library
+  jmx.enabled: false
+
+  datasource:
+    hikari.pool-name: ${spring.application.name}_pool
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    hikari.maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        hibernate.dialect: br.eti.arthurgregorio.library.infrastructure.jpa.CustomPostgresDialect
+        jdbc.lob.non_contextual_creation: true
+        jdbc.batch_size: 20
+        connection.autocommit: false
+        implicit_naming_strategy: br.eti.arthurgregorio.library.infrastructure.jpa.CustomNamingStrategy
+      org.hibernate.envers.store_data_at_delete: true
+      org.hibernate.envers.revision_field_name: revision
+      org.hibernate.envers.audit_table_suffix: _audit
+      org.hibernate.envers.revision_type_field_name: revision_type
+
+  flyway:
+    enabled: true
+    check-location: true
+    locations: classpath:db/migrations
+    sql-migration-prefix:
+    baseline-on-migrate: true
+    baseline-version: 0
+
+  thymeleaf:
+    enabled: true
+    cache: false
+    check-template: true
+    check-template-location: true
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  mail:
+    default-encoding: UTF-8
+    host:
+    port: 587
+    username:
+    password:
+    properties:
+      mail.transport.protocol: smtp
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.debug: false
+
+server:
+  servlet:
+    session:
+      persistent: false
+
+management:
+  health:
+    ldap:
+      enabled: false
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    flyway:
+      enabled: true
+    logfile:
+      enabled: true
+      external-file: /${user.home}/${spring.application.name}/${spring.application.name}.log
+
+logging:
+  file:
+    name: /${user.home}/${spring.application.name}/${spring.application.name}.log
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.springframework: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.context.support: INFO
+
+info:
+  name: library
+  description: 'Backend application for Library Vue'
+  version: @project.version@
+  environment: @active.profile@
