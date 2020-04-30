@@ -3,7 +3,7 @@
     <div class="level">
       <div class="level-left">
         <div class="level-item">
-          <div class="title">Home</div>
+          <div class="title">{{ $t('configurations.users.page-title') }}</div>
         </div>
       </div>
       <div class="level-right">
@@ -15,6 +15,14 @@
                   <b-icon pack='fas' size="is-small" icon="home"></b-icon>
                   {{ $t('breadcrumb.home') }}
                 </router-link>
+              </li>
+              <li>
+                <router-link :to="{ name: 'configurations' }">
+                  {{ $t('breadcrumb.configurations.root') }}
+                </router-link>
+              </li>
+              <li class="is-active">
+                <a href="#" aria-current="page">{{ $t('breadcrumb.configurations.users') }}</a>
               </li>
             </ul>
           </nav>
@@ -30,5 +38,5 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Home extends Vue { }
+export default class Users extends Vue { }
 </script>

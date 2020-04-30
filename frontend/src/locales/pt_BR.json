@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "Library Vue",
+    "subtitle": "Bem vindo, faça login para continuar",
+    "actions": {
+      "forgot-password": "Esqueci minha senha",
+      "login": "Login"
+    },
+    "form": {
+      "username": "Usuário",
+      "password": "Senha"
+    }
+  },
+  "recover-password": {
+    "title": "Library Vue",
+    "subtitle": "Informe seu e-mail para recuperar a senha",
+    "actions": {
+      "recover": "Recuperar",
+      "back-to-login": "Voltar ao login"
+    },
+    "form": {
+      "email": "E-mail"
+    }
+  },
+  "main-menu": {
+    "items": {
+      "registrations": "Cadastros",
+      "configurations": "Configurações",
+      "dashboards": "Dashboards"
+    }
+  },
+  "user-menu": {
+    "items": {
+      "logout": "Sair",
+      "my-profile": "Meu perfil"
+    }
+  },
+  "page-menu": {
+    "dashboards": {
+      "title": "Dashboards"
+    },
+    "registrations": {
+      "title": "Cadastros"
+    },
+    "configurations": {
+      "title": "Configurações",
+      "users": "Usuários"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "dashboards": { 
+      "root": "Dashboards"
+    },
+    "configurations": {
+      "root": "Configurações",
+      "users": "Usuários"
+    },
+    "registrations": {
+      "root": "Transações"
+    }
+  },
+  "configurations": {
+    "page-title": "Configurações",
+    "users": {
+      "page-title": "Usuários"
+    }
+  },
+  "registrations": {
+    "page-title": "Cadastros"
+  }
+}
