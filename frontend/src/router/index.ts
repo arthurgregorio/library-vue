@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-import HomeLayout from '@/components/HomeLayout.vue'
-import LoginLayout from '@/components/LoginLayout.vue'
-import ErrorLayout from '@/components/ErrorLayout.vue'
-import DashboardLayout from '@/components/DashboardLayout.vue'
-import RegistrationLayout from '@/components/RegistrationLayout.vue'
-import ConfigurationLayout from '@/components/ConfigurationLayout.vue'
+import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+
+import HomeLayout from '@/components/layout/HomeLayout.vue'
+import LoginLayout from '@/components/layout/LoginLayout.vue'
+import ErrorLayout from '@/components/layout/ErrorLayout.vue'
+import DashboardLayout from '@/components/layout/DashboardLayout.vue'
+import RegistrationLayout from '@/components/layout/RegistrationLayout.vue'
+import AdministrationLayout from '@/components/layout/AdministrationLayout.vue'
 
 Vue.use(VueRouter)
 
@@ -25,58 +27,71 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     redirect: 'home',
-    component: HomeLayout,
+    component: DefaultLayout,
     children: [
       {
         path: '/home',
         name: 'home',
         meta: { authenticated: true },
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue')
+        component: HomeLayout
       }
     ]
   },
   {
-    path: '/dashboards',
-    redirect: 'dashboards',
-    component: DashboardLayout,
+    path: '/dashboard',
+    redirect: 'dashboard',
+    component: DefaultLayout,
     children: [
       {
         path: '',
-        name: 'dashboards',
+        name: 'dashboard',
         meta: { authenticated: true },
-        component: () => import(/* webpackChunkName: "dashboards" */ '@/views/dashboards/Dashboards.vue')
+        component: DashboardLayout
       }
     ]
   },
   {
-    path: '/registrations',
-    redirect: 'registrations',
-    component: RegistrationLayout,
+    path: '/registration',
+    redirect: 'registration',
+    component: DefaultLayout,
     children: [
       {
         path: '',
-        name: 'registrations',
+        name: 'registration',
         meta: { authenticated: true },
-        component: () => import(/* webpackChunkName: "registrations" */ '@/views/registrations/Registrations.vue')
-      },
+        component: RegistrationLayout
+      }
     ]
   },
   {
-    path: '/configurations',
-    redirect: 'configurations',
-    component: ConfigurationLayout,
+    path: '/administration',
+    name: 'administration',
+    component: DefaultLayout,
     children: [
       {
         path: '',
-        name: 'configurations',
+        name: 'administration',
         meta: { authenticated: true },
-        component: () => import(/* webpackChunkName: "configurations" */ '@/views/configurations/Configurations.vue')
+        component: AdministrationLayout
       },
       {
         path: 'users',
-        name: 'configurations.users',
-        meta: { authenticated: true },
-        component: () => import(/* webpackChunkName: "configurations" */ '@/views/configurations/Users.vue')
+        redirect: 'users',
+        component: AdministrationLayout,
+        children: [
+          {
+            path: '',
+            name: 'users',
+            meta: { authenticated: true },
+            component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UsersList.vue')
+          },
+          {
+            path: 'add',
+            name: 'users.add',
+            meta: { authenticated: true },
+            component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserForm.vue')
+          }
+        ]
       }
     ]
   },
@@ -99,7 +114,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/error',
-    component: ErrorLayout,
+    component: DefaultLayout,
     children: [
       {
         path: '/403',

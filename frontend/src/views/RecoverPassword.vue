@@ -1,36 +1,54 @@
 <template>
   <div>
-    <h3 class="title has-text-black">
-      {{ $t('recover-password.title') }}
-    </h3>
-    <p class="subtitle has-text-black">
-      {{ $t('recover-password.subtitle') }}
-    </p>
-    <form>
-      <div class="field">
-        <div class="control has-icons-left">
-          <input class="input is-large" type="email" tabindex="1"
-            :placeholder="$t('recover-password.form.email')" autofocus />
-            <span class="icon is-large is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-        </div>
-      </div>
-      <button tabindex="3" class="button is-block is-large is-fullwidth is-primary">
+    <h3 class="title has-text-black">{{ $t('recover-password.title') }}</h3>
+    <p class="subtitle has-text-black">{{ $t('recover-password.subtitle') }}</p>
+    <validation-observer ref="observer" v-slot="{ passes, invalid }">
+      <validation-provider
+        rules="required|email"
+        v-slot="{ errors, valid }"
+        :name="$t('recover-password.form.email')" >
+        <b-field
+          :message="errors"
+          :type="{ 'is-danger': errors[0], 'is-success': valid }">
+          <b-input
+            type="text"
+            tabindex="1"
+            icon="envelope"
+            size="is-large"
+            icon-pack="fas"
+            v-model="email"
+            :placeholder="$t('recover-password.form.email')"/>
+        </b-field>
+      </validation-provider>
+      <b-button
+        tabindex="2"
+        size="is-large"
+        type="is-primary"
+        :loading="loading"
+        :disabled="invalid"
+        class="is-block is-fullwidth"
+        @click.prevent="passes(doRecoverPassword)">
         {{ $t('recover-password.actions.recover') }}
-      </button>
-      <p class="has-text-grey has-margin-top-4">
-        <router-link :to="{ name: 'login' }">
-          {{ $t('recover-password.actions.back-to-login') }}
-        </router-link>
-      </p>
-    </form>
+      </b-button>
+    </validation-observer>
+    <p class="has-text-grey has-margin-top-4">
+      <router-link :to="{ name: 'login' }">
+        {{ $t('recover-password.actions.back-to-login') }}
+      </router-link>
+    </p>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class RecoverPassword extends Vue {}
+export default class RecoverPassword extends Vue {
+  private email = ''
+  private loading = false
+
+  public doRecoverPassword() {
+    console.log(this.email)
+  }
+}
 </script>

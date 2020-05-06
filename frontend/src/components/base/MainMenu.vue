@@ -16,14 +16,14 @@
         </div>
         <div id="main-menu" class="navbar-menu">
           <div class="navbar-start">
-            <router-link class="navbar-item" :to="{ name: 'dashboards' }">
-              {{ $t('main-menu.items.dashboards') }}
+            <router-link class="navbar-item" :to="{ name: 'dashboard' }">
+              {{ $t('main-menu.items.dashboard') }}
             </router-link>
-            <router-link class="navbar-item" :to="{ name: 'registrations' }">
-              {{ $t('main-menu.items.registrations') }}
+            <router-link class="navbar-item" :to="{ name: 'registration' }">
+              {{ $t('main-menu.items.registration') }}
             </router-link>
-            <router-link class="navbar-item" :to="{ name: 'configurations' }">
-              {{ $t('main-menu.items.configurations') }}
+            <router-link class="navbar-item" :to="{ name: 'administration' }">
+              {{ $t('main-menu.items.administration') }}
             </router-link>
           </div>
           <div class="navbar-end">
@@ -38,14 +38,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
-import UserMenu from '@/components/UserMenu.vue';
+import UserMenu from '@/components/base/UserMenu.vue'
 
 @Component({
   components: {
-    UserMenu,
-  },
+    UserMenu
+  }
 })
 export default class MainMenu extends Vue { }
 </script>

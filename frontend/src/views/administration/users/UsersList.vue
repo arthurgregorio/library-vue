@@ -3,7 +3,7 @@
     <div class="level">
       <div class="level-left">
         <div class="level-item">
-          <div class="title">Dashboards</div>
+          <div class="title">{{ $t('administration.users.page-title') }}</div>
         </div>
       </div>
       <div class="level-right">
@@ -17,9 +17,12 @@
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'dashboards' }">
-                  {{ $t('breadcrumb.dashboards.root') }}
+                <router-link :to="{ name: 'administration' }">
+                  {{ $t('breadcrumb.administration.root') }}
                 </router-link>
+              </li>
+              <li class="is-active">
+                <a href="#" aria-current="page">{{ $t('breadcrumb.administration.users') }}</a>
               </li>
             </ul>
           </nav>
@@ -32,8 +35,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Dashboards extends Vue { }
+export default class UsersList extends Vue { }
 </script>

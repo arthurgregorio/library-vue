@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class UserMenu extends Vue {
-  public doLogout(): void {
-    this.$router.push({ name: 'login' });
+  public doLogout (): void {
+    this.$router.push({ name: 'login' })
   }
 }
 </script>

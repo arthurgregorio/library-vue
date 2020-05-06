@@ -5,7 +5,7 @@ library:
       name: 'library-web'
 
 spring:
-  application.name: library
+  application.name: library-vue
   jmx.enabled: false
 
   datasource:
@@ -69,20 +69,19 @@ server:
       persistent: false
 
 management:
-  health:
-    ldap:
-      enabled: false
   endpoints:
-    enabled-by-default: true
+    enabled-by-default: false
     web:
       exposure:
-        include: '*'
+        include: ['flyway', 'logfile', 'health', 'info', 'scheduledtasks']
   endpoint:
     health:
       enabled: true
     info:
       enabled: true
     flyway:
+      enabled: true
+    scheduledtasks:
       enabled: true
     logfile:
       enabled: true
@@ -100,7 +99,7 @@ logging:
     org.springframework.context.support: INFO
 
 info:
-  name: library
+  name: ${spring.application.name}
   description: 'Backend application for Library Vue'
   version: @project.version@
   environment: @active.profile@

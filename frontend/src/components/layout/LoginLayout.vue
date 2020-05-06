@@ -18,13 +18,13 @@
 </template>
 
 <script lang="ts">
-import { FadeTransition } from 'vue2-transitions';
-import { Component, Vue } from 'vue-property-decorator';
+import { FadeTransition } from 'vue2-transitions'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
   components: {
-    FadeTransition,
-  },
+    FadeTransition
+  }
 })
 export default class LoginLayout extends Vue {}
 </script>

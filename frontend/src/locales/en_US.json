@@ -1,3 +1,80 @@
 {
-  "message": "hello i18n !!"
+  "validation": {
+    "strongPassword": "Senha deve conter ao menos uma letra e um número",
+    "matchPassword": "As senhas devem ser iguais",
+    "required": "O campo {_field_} é obrigatório",
+    "email": "O campo {_field_} deve ser um email válido",
+    "min": "O campo {_field_} deve conter pelo menos {length} caracteres",
+    "max": "O campo {_field_} pode conter no máximo {length} caracteres"
+  },
+  "login": {
+    "title": "Library Vue",
+    "subtitle": "Bem vindo, faça login para continuar",
+    "actions": {
+      "forgot-password": "Esqueci minha senha",
+      "login": "Login"
+    },
+    "form": {
+      "username": "Usuário",
+      "password": "Senha"
+    }
+  },
+  "recover-password": {
+    "title": "Library Vue",
+    "subtitle": "Informe seu e-mail para recuperar a senha",
+    "actions": {
+      "recover": "Recuperar",
+      "back-to-login": "Voltar ao login"
+    },
+    "form": {
+      "email": "E-mail"
+    }
+  },
+  "main-menu": {
+    "items": {
+      "registration": "Cadastros",
+      "administration": "Administração",
+      "dashboard": "Dashboard"
+    }
+  },
+  "user-menu": {
+    "items": {
+      "logout": "Sair",
+      "my-profile": "Meu perfil"
+    }
+  },
+  "page-menu": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "registration": {
+      "title": "Cadastros"
+    },
+    "administration": {
+      "title": "Administração",
+      "users": "Usuários"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "dashboard": { 
+      "root": "Dashboard"
+    },
+    "administration": {
+      "root": "Administração",
+      "users": "Usuários"
+    },
+    "registration": {
+      "root": "Transações"
+    }
+  },
+  "administration": {
+    "page-title": "Administração",
+    "users": {
+      "page-title": "Usuários"
+    }
+  },
+  "registration": {
+    "page-title": "Cadastros"
+  }
 }

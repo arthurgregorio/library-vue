@@ -1,4 +1,76 @@
 {
+  "validation": {
+    "strongPassword": "Senha deve conter ao menos uma letra e um número",
+    "matchPassword": "As senhas devem ser iguais",
+    "required": "O campo {_field_} é obrigatório",
+    "email": "O campo {_field_} deve ser um email válido",
+    "min": "O campo {_field_} deve conter pelo menos {length} caracteres",
+    "max": "O campo {_field_} pode conter no máximo {length} caracteres"
+  },
+  "main-menu": {
+    "items": {
+      "registration": "Cadastros",
+      "administration": "Administração",
+      "dashboard": "Dashboard"
+    }
+  },
+  "user-menu": {
+    "items": {
+      "logout": "Sair",
+      "my-profile": "Meu perfil"
+    }
+  },
+  "page-menu": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "registration": {
+      "title": "Cadastros"
+    },
+    "administration": {
+      "title": "Administração",
+      "users": "Usuários"
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "dashboard": { 
+      "root": "Dashboard"
+    },
+    "administration": {
+      "root": "Administração",
+      "users": "Usuários"
+    },
+    "registration": {
+      "root": "Transações"
+    }
+  },
+  "administration": {
+    "page-title": "Administração",
+    "users": {
+      "page-title": "Usuários"
+    }
+  },
+  "registration": {
+    "page-title": "Cadastros"
+  },
+  "actions": {
+    "go-back": "Voltar",
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "new": "Novo"
+  },
+  "error": {
+    "404": {
+      "message": "Não foi possível encontrar a página solicitada",
+      "title": "Ops!"
+    },
+    "403": {
+      "message": "Você não tem permissão para acessar esta página ou recurso",
+      "title": "Uhmmm, estamos de olho!"
+    }
+  },
   "login": {
     "title": "Library Vue",
     "subtitle": "Bem vindo, faça login para continuar",
@@ -21,52 +93,5 @@
     "form": {
       "email": "E-mail"
     }
-  },
-  "main-menu": {
-    "items": {
-      "registrations": "Cadastros",
-      "configurations": "Configurações",
-      "dashboards": "Dashboards"
-    }
-  },
-  "user-menu": {
-    "items": {
-      "logout": "Sair",
-      "my-profile": "Meu perfil"
-    }
-  },
-  "page-menu": {
-    "dashboards": {
-      "title": "Dashboards"
-    },
-    "registrations": {
-      "title": "Cadastros"
-    },
-    "configurations": {
-      "title": "Configurações",
-      "users": "Usuários"
-    }
-  },
-  "breadcrumb": {
-    "home": "Home",
-    "dashboards": { 
-      "root": "Dashboards"
-    },
-    "configurations": {
-      "root": "Configurações",
-      "users": "Usuários"
-    },
-    "registrations": {
-      "root": "Transações"
-    }
-  },
-  "configurations": {
-    "page-title": "Configurações",
-    "users": {
-      "page-title": "Usuários"
-    }
-  },
-  "registrations": {
-    "page-title": "Cadastros"
   }
 }
