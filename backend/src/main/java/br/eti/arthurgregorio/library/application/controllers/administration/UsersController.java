@@ -1,6 +1,8 @@
 package br.eti.arthurgregorio.library.application.controllers.administration;
 
 import br.eti.arthurgregorio.library.domain.dto.UserForm;
+import br.eti.arthurgregorio.library.domain.dto.validation.Adding;
+import br.eti.arthurgregorio.library.domain.dto.validation.Editing;
 import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import br.eti.arthurgregorio.library.domain.repositories.administration.UserRepository;
 import br.eti.arthurgregorio.library.domain.services.UserService;
@@ -8,9 +10,8 @@ import br.eti.arthurgregorio.library.infrastructure.misc.RestPreconditions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  *
@@ -39,18 +40,6 @@ public class UsersController {
 
     /**
      *
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<UserForm> getById(@PathVariable Long id) {
-        return this.userRepository.findById(id)
-                .map(found -> ResponseEntity.ok(UserForm.of(found)))
-                .orElse(ResponseEntity.noContent().build());
-    }
-
-    /**
-     *
      * @param filter
      * @param pageable
      * @return
@@ -62,12 +51,33 @@ public class UsersController {
 
     /**
      *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<UserForm> getById(@PathVariable Long id) {
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     *
      * @param model
      * @return
      */
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody @Valid UserForm model) {
+    public ResponseEntity<User> save(@RequestBody @Validated(Adding.class) UserForm model) {
         return ResponseEntity.ok(this.userService.save(model));
+    }
+
+    /**
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<UserForm> update(@PathVariable long id, @RequestBody @Validated(Editing.class) UserForm model) {
+        return ResponseEntity.ok().build();
     }
 
     /**

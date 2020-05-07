@@ -30,7 +30,7 @@ public class DuplicatedEmailValidator implements UserSavingLogic, UserUpdatingLo
      * @param value
      */
     @Override
-    public void perform(User value) {
+    public void run(User value) {
         if (value.isSaved()) {
             this.userRepository.findByEmailAndIdNot(value.getEmail(), value.getId())
                     .ifPresent(this::duplicatedException);

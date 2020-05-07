@@ -30,7 +30,7 @@ public class DuplicatedUserNameValidator implements UserSavingLogic {
      * @param value
      */
     @Override
-    public void perform(User value) {
+    public void run(User value) {
         this.userRepository.findByUsername(value.getUsername())
                 .ifPresent(user -> {
                     throw new BusinessLogicException("error.user.duplicated-username", user.getName());

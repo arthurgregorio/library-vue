@@ -15,5 +15,5 @@ public interface BusinessLogic<T extends PersistentEntity> {
      *
      * @param value
      */
-    void perform(T value);
+    void run(T value);
 }

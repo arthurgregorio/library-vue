@@ -7,29 +7,6 @@
     "min": "O campo {_field_} deve conter pelo menos {length} caracteres",
     "max": "O campo {_field_} pode conter no máximo {length} caracteres"
   },
-  "login": {
-    "title": "Library Vue",
-    "subtitle": "Bem vindo, faça login para continuar",
-    "actions": {
-      "forgot-password": "Esqueci minha senha",
-      "login": "Login"
-    },
-    "form": {
-      "username": "Usuário",
-      "password": "Senha"
-    }
-  },
-  "recover-password": {
-    "title": "Library Vue",
-    "subtitle": "Informe seu e-mail para recuperar a senha",
-    "actions": {
-      "recover": "Recuperar",
-      "back-to-login": "Voltar ao login"
-    },
-    "form": {
-      "email": "E-mail"
-    }
-  },
   "main-menu": {
     "items": {
       "registration": "Cadastros",
@@ -76,5 +53,62 @@
   },
   "registration": {
     "page-title": "Cadastros"
+  },
+  "actions": {
+    "go-back": "Voltar",
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "new": "Novo",
+    "search": "Buscar"
+  },
+  "commons": {
+    "list": {
+      "empty": "Nenhum dado encontrado",
+      "actions": "Ações"
+    }
+  },
+  "filters": {
+    "users": "Nome, e-mail ou nome de usuário"
+  },
+  "error": {
+    "404": {
+      "message": "Não foi possível encontrar a página solicitada",
+      "title": "Ops!"
+    },
+    "403": {
+      "message": "Você não tem permissão para acessar esta página ou recurso",
+      "title": "Uhmmm, estamos de olho!"
+    }
+  },
+  "login": {
+    "title": "Library Vue",
+    "subtitle": "Bem vindo, faça login para continuar",
+    "actions": {
+      "forgot-password": "Esqueci minha senha",
+      "login": "Login"
+    },
+    "form": {
+      "username": "Usuário",
+      "password": "Senha"
+    }
+  },
+  "recover-password": {
+    "title": "Library Vue",
+    "subtitle": "Informe seu e-mail para recuperar a senha",
+    "actions": {
+      "recover": "Recuperar",
+      "back-to-login": "Voltar ao login"
+    },
+    "form": {
+      "email": "E-mail"
+    }
+  },
+  "users": {
+    "list": {
+      "name": "Nome",
+      "username": "Nome",
+      "email": "Nome"
+    }
   }
 }

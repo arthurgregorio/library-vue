@@ -8,3 +8,12 @@
 @import "~buefy/src/scss/buefy";
 
 @import 'overrides';
+
+
+// customizations
+.table td {
+    vertical-align: middle;
+}
+.table td button {
+    width: 35px;
+}

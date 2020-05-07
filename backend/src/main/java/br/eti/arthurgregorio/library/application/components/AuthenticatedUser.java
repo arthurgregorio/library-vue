@@ -18,8 +18,15 @@ import java.util.Optional;
 @Component
 public class AuthenticatedUser {
 
-    @Autowired
     private UserRepository userRepository;
+
+    /**
+     *
+     * @param userRepository
+     */
+    public AuthenticatedUser(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      *

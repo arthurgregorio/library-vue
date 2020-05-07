@@ -59,7 +59,17 @@
     "add": "Adicionar",
     "cancel": "Cancelar",
     "close": "Fechar",
-    "new": "Novo"
+    "new": "Novo",
+    "search": "Buscar"
+  },
+  "commons": {
+    "list": {
+      "empty": "Nenhum dado encontrado",
+      "actions": "Ações"
+    }
+  },
+  "filters": {
+    "users": "Nome, e-mail ou nome de usuário"
   },
   "error": {
     "404": {
@@ -91,6 +101,13 @@
       "back-to-login": "Voltar ao login"
     },
     "form": {
+      "email": "E-mail"
+    }
+  },
+  "users": {
+    "list": {
+      "name": "Nome",
+      "username": "Usuário",
       "email": "E-mail"
     }
   }

@@ -6,6 +6,7 @@ import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import br.eti.arthurgregorio.library.domain.repositories.DefaultRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,4 +25,17 @@ public interface GrantRepository extends DefaultRepository<Grant> {
      * @return
      */
     Optional<Grant> findByUserAndAuthority(User user, Authority authority);
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    List<Grant> findByUser(User user);
+
+    /**
+     *
+     * @param userId
+     */
+    void deleteByUser_id(long userId);
 }

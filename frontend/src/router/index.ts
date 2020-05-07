@@ -5,7 +5,6 @@ import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 
 import HomeLayout from '@/components/layout/HomeLayout.vue'
 import LoginLayout from '@/components/layout/LoginLayout.vue'
-import ErrorLayout from '@/components/layout/ErrorLayout.vue'
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import RegistrationLayout from '@/components/layout/RegistrationLayout.vue'
 import AdministrationLayout from '@/components/layout/AdministrationLayout.vue'
@@ -65,7 +64,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/administration',
-    name: 'administration',
+    redirect: 'administration',
     component: DefaultLayout,
     children: [
       {

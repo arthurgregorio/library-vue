@@ -76,6 +76,15 @@ public class User extends PersistentEntity {
      *
      * @return
      */
+    public User enable() {
+        this.active = true;
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     */
     public List<Grant> getGrants() {
         return Collections.unmodifiableList(this.grants);
     }

@@ -47,7 +47,7 @@ export default class RecoverPassword extends Vue {
   private email = ''
   private loading = false
 
-  public doRecoverPassword() {
+  public doRecoverPassword(): void {
     console.log(this.email)
   }
 }
