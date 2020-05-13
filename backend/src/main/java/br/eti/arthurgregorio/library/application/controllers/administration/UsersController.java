@@ -3,15 +3,28 @@ package br.eti.arthurgregorio.library.application.controllers.administration;
 import br.eti.arthurgregorio.library.domain.dto.UserForm;
 import br.eti.arthurgregorio.library.domain.dto.validation.Adding;
 import br.eti.arthurgregorio.library.domain.dto.validation.Editing;
+import br.eti.arthurgregorio.library.domain.entities.administration.Authority;
+import br.eti.arthurgregorio.library.domain.entities.administration.Grant;
 import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import br.eti.arthurgregorio.library.domain.repositories.administration.UserRepository;
 import br.eti.arthurgregorio.library.domain.services.UserService;
 import br.eti.arthurgregorio.library.infrastructure.misc.RestPreconditions;
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.remove;
 
 /**
  *
@@ -24,18 +37,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UsersController {
 
+    @Autowired
     private UserService userService;
 
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      *
-     * @param userService
-     * @param userRepository
      */
-    public UsersController(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
-        this.userRepository = userRepository;
+    @PostConstruct
+    protected void configureMapper() {
+        this.modelMapper.createTypeMap(User.class, UserForm.class)
+                .addMapping(source -> "", UserForm::setPassword);
     }
 
     /**
@@ -51,12 +68,14 @@ public class UsersController {
 
     /**
      *
-     * @param id
+     * @param userId
      * @return
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<UserForm> getById(@PathVariable Long id) {
-        return ResponseEntity.ok().build();
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserForm> getById(@PathVariable Long userId) {
+        return this.userRepository.findById(userId)
+                .map(found -> ResponseEntity.ok(this.modelMapper.map(found, UserForm.class)))
+                .orElse(ResponseEntity.noContent().build());
     }
 
     /**
@@ -66,18 +85,26 @@ public class UsersController {
      */
     @PostMapping
     public ResponseEntity<User> save(@RequestBody @Validated(Adding.class) UserForm model) {
-        return ResponseEntity.ok(this.userService.save(model));
+        this.userService.save(this.modelMapper.map(model, User.class), model.getAuthorities());
+        return ResponseEntity.ok().build();
     }
 
     /**
      *
-     * @param id
+     * @param userId
      * @param model
      * @return
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<UserForm> update(@PathVariable long id, @RequestBody @Validated(Editing.class) UserForm model) {
-        return ResponseEntity.ok().build();
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserForm> update(@PathVariable long userId,
+                                           @RequestBody @Validated(Editing.class) UserForm model) {
+        return this.userRepository.findById(userId)
+                .map(found -> {
+                    final var user = this.modelMapper.map(model, User.class);
+                    final var saved = this.userService.update(user, model.getAuthorities());
+                    return ResponseEntity.ok(this.modelMapper.map(saved, UserForm.class));
+                })
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     /**

@@ -12,6 +12,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,12 +24,8 @@ import java.util.stream.Collectors;
  * @since 1.0.0, 06/05/2020
  */
 @ToString
-@NoArgsConstructor
-public class UserForm {
+public class UserForm extends BaseForm {
 
-    @Getter
-    @Setter
-    private Long id;
     @Getter
     @Setter
     private boolean active;
@@ -49,15 +46,23 @@ public class UserForm {
     @NotBlank(message = "user.empty-email", groups = Always.class)
     private String email;
 
+    @Getter
     @Setter
     @NotEmpty(message = "user.empty-authorities", groups = Always.class)
     private List<Authority> authorities;
 
     /**
      *
-     * @return
      */
-    public List<Authority> getAuthorities() {
-        return Collections.unmodifiableList(this.authorities);
+    public UserForm() {
+        this.authorities = new ArrayList<>();
+    }
+
+    /**
+     *
+     * @param grants
+     */
+    public void setGrants(List<Grant> grants) {
+        this.authorities = grants.stream().map(Grant::getAuthority).collect(Collectors.toList());
     }
 }

@@ -34,3 +34,11 @@ extend('email', { ...email })
 extend('length', { ...length })
 extend('required', { ...required })
 extend('confirmed', { ...confirmed })
+
+extend('matchPassword', {
+  params: ['target'],
+  // eslint-disable-next-line
+  validate(value, { target }: Record<string, any>) {
+    return value === target
+  }
+})

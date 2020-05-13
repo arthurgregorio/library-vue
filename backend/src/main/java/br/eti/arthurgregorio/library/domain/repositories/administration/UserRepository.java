@@ -45,8 +45,6 @@ public interface UserRepository extends DefaultRepository<User> {
      * @param filter
      * @return
      */
-    @Query("from User u " +
-            "where filter(:filter, u.name, u.email, u.username) = true " +
-            "order by u.name")
+    @Query("from User u where filter(:filter, u.name, u.email, u.username) = true")
     Page<User> findByFilter(String filter, Pageable pageable);
 }

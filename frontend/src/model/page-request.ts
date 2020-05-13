@@ -1,5 +1,19 @@
 export class PageRequest {
-  public total = 0
-  public current = 0
-  public size = 20
+    filter!: string
+    currentPage!: number
+    pageSize!: number
+
+    sortField!: string
+    direction!: string
+
+    constructor() {
+      this.filter = ''
+      this.currentPage = 0
+      this.pageSize = 25
+      this.direction = 'asc'
+    }
+
+    public isSortable(): boolean {
+      return this.sortField !== undefined && this.direction !== undefined
+    }
 }

@@ -89,6 +89,27 @@ const routes: Array<RouteConfig> = [
             name: 'users.add',
             meta: { authenticated: true },
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserForm.vue')
+          },
+          {
+            props: true,
+            path: ':id/detail',
+            name: 'users.detail',
+            meta: { authenticated: true },
+            component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserDetail.vue')
+          },
+          {
+            path: ':id/edit',
+            name: 'users.edit',
+            meta: { authenticated: true },
+            props: (route) => ({ id: route.params.id, editing: true }),
+            component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserForm.vue')
+          },
+          {
+            path: ':id/delete',
+            name: 'users.delete',
+            meta: { authenticated: true },
+            props: (route) => ({ id: route.params.id, deleting: true }),
+            component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserDetail.vue')
           }
         ]
       }

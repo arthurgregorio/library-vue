@@ -29,30 +29,26 @@ import static javax.persistence.FetchType.EAGER;
  */
 @Entity
 @Audited
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@ToString(exclude = "grants")
+@EqualsAndHashCode(callSuper = true, exclude = "grants")
 @Table(name = "users", schema = ADMINISTRATION)
 public class User extends PersistentEntity {
 
     @Getter
     @Setter
-    @NotBlank(message = "user.empty-name")
     @Column(name = "name", nullable = false, length = 90)
     private String name;
     @Getter
     @Setter
-    @NotBlank(message = "user.empty-email")
     @Column(name = "email", nullable = false, length = 90)
     private String email;
     @Getter
     @Setter
-    @NotBlank(message = "user.empty-username")
     @Column(name = "username", nullable = false, length = 45)
     private String username;
     @Getter
     @Setter
     @JsonIgnore
-    @NotBlank(message = "user.empty-password")
     @Column(name = "password", nullable = false)
     private String password;
     @Getter
@@ -60,9 +56,10 @@ public class User extends PersistentEntity {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @Setter
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = {REMOVE})
-    private final List<Grant> grants;
+    private List<Grant> grants;
 
     /**
      *

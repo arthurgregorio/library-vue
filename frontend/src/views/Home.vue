@@ -12,7 +12,7 @@
             <ul>
               <li>
                 <router-link :to="{ name: 'home' }">
-                  <b-icon pack='fas' size="is-small" icon="home"></b-icon>
+                  <b-icon pack='fas' size="is-small" icon="home"/>
                   {{ $t('breadcrumb.home') }}
                 </router-link>
               </li>

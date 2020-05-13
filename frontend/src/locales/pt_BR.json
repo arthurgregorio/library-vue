@@ -34,25 +34,16 @@
   },
   "breadcrumb": {
     "home": "Home",
-    "dashboard": { 
-      "root": "Dashboard"
-    },
-    "administration": {
-      "root": "Administração",
-      "users": "Usuários"
-    },
-    "registration": {
-      "root": "Transações"
-    }
-  },
-  "administration": {
-    "page-title": "Administração",
+    "dashboard": "Dashboard",
+    "registration": "Cadastros",
+    "administration": "Administração",
     "users": {
-      "page-title": "Usuários"
-    }
-  },
-  "registration": {
-    "page-title": "Cadastros"
+      "listing": "Usuários",
+      "adding": "Cadastrando",
+      "detailing": "Detalhando",
+      "deleting": "Excluindo",
+      "editing": "Editando"
+    }    
   },
   "actions": {
     "go-back": "Voltar",
@@ -60,12 +51,38 @@
     "cancel": "Cancelar",
     "close": "Fechar",
     "new": "Novo",
-    "search": "Buscar"
+    "search": "Buscar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "save": "Salvar",
+    "update": "Atualizar"
   },
   "commons": {
+    "text": {
+      "yes": "Sim",
+      "no": "Não"
+    },
     "list": {
       "empty": "Nenhum dado encontrado",
-      "actions": "Ações"
+      "actions": "Ações",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "status": "Status",
+      "rows-per-page": "Items por página"
+    },
+    "feedback": {
+      "data-saved": "Registro salvo com sucesso!",
+      "data-updated": "Registro atualizado com sucesso!",
+      "data-deleted": "Registro excluído com sucesso!",
+      "delete-message": "Confirma a exclusão do registro?",
+      "bad-request": "Sua requisição não pode ser processada, tente novamente",
+      "server-error": "O servidor encontrou uma falha ao processar a requisição, entre em contato com o administrador"
+    }
+  },
+  "constants": {
+    "authorities": {
+      "ADMINISTRATOR": "Administrador",
+      "LIBRARIAN": "Bibliotecário"
     }
   },
   "filters": {
@@ -105,10 +122,27 @@
     }
   },
   "users": {
+    "page-title": {
+      "listing": "Manutenção de usuários",
+      "adding": "Cadastrando usuário",
+      "editing": "Editando usuário: {name}",
+      "deleting": "Excluindo usuário: {name}",
+      "detailing": "Detalhando usuário: {name}"
+    },
     "list": {
       "name": "Nome",
       "username": "Usuário",
       "email": "E-mail"
+    },
+    "form": {
+      "status": "Ativo?",
+      "name": "Nome",
+      "username": "Nome de usuário",
+      "email": "E-mail",
+      "password": "Senha",
+      "confirmation": "Confirmação",
+      "profile": "Perfil",
+      "search-profile": "Buscar perfil"
     }
   }
 }

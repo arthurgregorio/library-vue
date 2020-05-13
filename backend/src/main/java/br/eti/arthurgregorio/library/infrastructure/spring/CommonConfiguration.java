@@ -3,6 +3,7 @@ package br.eti.arthurgregorio.library.infrastructure.spring;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.module.jsr310.Jsr310Module;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -31,6 +32,8 @@ public class CommonConfiguration {
         mapper.getConfiguration()
                 .setFieldAccessLevel(AccessLevel.PRIVATE)
                 .setMatchingStrategy(MatchingStrategies.STRICT);
+
+        mapper.registerModule(new Jsr310Module());
 
         return mapper;
     }

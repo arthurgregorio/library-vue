@@ -26,9 +26,11 @@ public abstract class PersistentEntity implements IPersistentEntity<Long> {
     private Long id;
 
     @Getter
+    @Setter
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn;
     @Getter
+    @Setter
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
 

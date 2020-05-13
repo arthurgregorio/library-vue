@@ -1,10 +1,10 @@
 package br.eti.arthurgregorio.library.domain.services;
 
-import br.eti.arthurgregorio.library.domain.dto.UserForm;
+import br.eti.arthurgregorio.library.domain.entities.administration.Authority;
+import br.eti.arthurgregorio.library.domain.entities.administration.Grant;
 import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import br.eti.arthurgregorio.library.domain.logics.user.UserSavingLogic;
 import br.eti.arthurgregorio.library.domain.logics.user.UserUpdatingLogic;
-import br.eti.arthurgregorio.library.domain.repositories.administration.AuthorityRepository;
 import br.eti.arthurgregorio.library.domain.repositories.administration.GrantRepository;
 import br.eti.arthurgregorio.library.domain.repositories.administration.UserActivationRepository;
 import br.eti.arthurgregorio.library.domain.repositories.administration.UserRepository;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * @author Arthur Gregorio
@@ -30,8 +32,6 @@ public class UserService {
     @Autowired
     private GrantRepository grantRepository;
     @Autowired
-    private AuthorityRepository authorityRepository;
-    @Autowired
     private UserActivationRepository userActivationRepository;
 
     @Autowired
@@ -44,23 +44,46 @@ public class UserService {
 
     /**
      *
-     * @param userForm
-     * @return
+     * @param user
+     * @param authorities
      */
     @Transactional
-    public User save(UserForm userForm) {
-        return null;
+    public void save(User user, List<Authority> authorities) {
+        this.userSavingLogics.forEach(logic -> logic.run(user));
+        user.setPassword(this.encoder.encode(user.getPassword()));
+        this.userRepository.save(user);
+        authorities.forEach(authority -> this.grantRepository.save(new Grant(user, authority)));
     }
 
     /**
      *
-     * @param id
-     * @param userForm
+     * @param user
+     * @param authorities
      * @return
      */
     @Transactional
-    public User update(long id, UserForm userForm) {
-        return null;
+    public User update(User user, List<Authority> authorities) {
+        this.userUpdatingLogics.forEach(logic -> logic.run(user));
+
+        // if password is blank, keep the actual password, if not, encode and update a new one base on password field
+        if (isBlank(user.getPassword())) {
+            this.userRepository.findById(user.getId()).ifPresent(found -> user.setPassword(found.getPassword()));
+        } else {
+            final var encoded = this.encoder.encode(user.getPassword());
+            user.setPassword(encoded);
+        }
+
+        this.userRepository.save(user);
+
+        if (authorities != null && !authorities.isEmpty()) {
+            this.grantRepository.deleteByUser_id(user.getId());
+            authorities.forEach(authority -> this.grantRepository.save(new Grant(user, authority)));
+        }
+
+        final var grants = this.grantRepository.findByUser(user);
+        user.setGrants(grants);
+
+        return user;
     }
 
     /**
