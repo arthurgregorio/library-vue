@@ -187,12 +187,12 @@ export default class UsersList extends Mixins(FormUtilities) {
     this.$router.push({ name: 'users.add' })
   }
 
-  private changeToEdit(userId: string): void {
-    this.$router.push({ name: 'users.edit', params: { id: userId } })
+  private changeToEdit(userId: number): void {
+    this.$router.push({ name: 'users.edit', params: { id: userId.toString() } })
   }
 
-  private changeToDelete(userId: string): void {
-    this.$router.push({ name: 'users.delete', params: { id: userId } })
+  private changeToDelete(userId: number): void {
+    this.$router.push({ name: 'users.delete', params: { id: userId.toString() } })
   }
 }
 </script>
