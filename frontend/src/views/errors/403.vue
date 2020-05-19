@@ -24,6 +24,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  name: 'error-403' as string,
   methods: {
     goBack() {
       this.$router.go(-1)

@@ -1,31 +1,30 @@
+import Vue from 'vue'
 import Axios, { AxiosInstance } from 'axios'
 
-import EventBus from '@/components/event/event-bus'
+import { apiBaseUrl, tokenKey } from '@/model/utilities/configurations'
+
+import { Token } from '@/model/administration/token'
 
 export class AxiosFactory {
-  public static create (requestPath: string): AxiosInstance {
-    const apiUrl: string = process.env.VUE_APP_API_URL || 'http://localhost:8080'
-
-    const axios: AxiosInstance = Axios.create({
-      baseURL: `${apiUrl}/${requestPath}`,
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: 'Bearer 64a9e2a4-4d94-4306-99fc-2b2a8ac05a1a'
-      }
-    })
-
-    this.applyInterceptors(axios)
-
-    return axios
+  public static create(requestPath: string, requireAuth = true): AxiosInstance {
+    const header = requireAuth ? {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${this.getAccessToken()}`
+    } : {
+      'Content-type': 'application/json'
+    }
+    return this.build(requestPath, header)
   }
 
-  private static applyInterceptors(axios: AxiosInstance): void {
-    axios.interceptors.response.use(
-      success => { return Promise.resolve(success) },
-      error => {
-        EventBus.$emit('errorCaught', error)
-        return Promise.reject(error)
-      }
-    )
+  public static build(requestPath: string, header: object): AxiosInstance {
+    return Axios.create({
+      baseURL: `${apiBaseUrl}/${requestPath}`,
+      headers: { ...header }
+    })
+  }
+
+  public static getAccessToken(): string {
+    const token: Token = Vue.prototype.$cookies.get(tokenKey)
+    return token !== null ? token.access_token : ''
   }
 }

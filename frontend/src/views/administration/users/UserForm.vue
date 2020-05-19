@@ -232,6 +232,9 @@ export default class UsersForm extends Mixins(FormUtilities) {
         () => {
           this.clearForm()
           this.toastSuccess('commons.feedback.data-saved')
+        },
+        error => {
+          this.shouldLog(error)
         }
       ).finally(() => {
         this.actionLoading = false
@@ -245,7 +248,8 @@ export default class UsersForm extends Mixins(FormUtilities) {
         success => {
           this.user = success
           this.toastSuccess('commons.feedback.data-updated')
-        }, error => {
+        },
+        error => {
           this.shouldLog(error)
         }
       ).finally(() => {

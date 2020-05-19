@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
+import { tokenKey } from '@/model/utilities/configurations'
+
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 
 import HomeLayout from '@/components/layout/HomeLayout.vue'
@@ -137,14 +139,24 @@ const routes: Array<RouteConfig> = [
     component: DefaultLayout,
     children: [
       {
-        path: '/403',
+        path: '/403', // TODO when the user has no permissions, improve the feedback
         name: '403',
-        component: () => import(/* webpackChunkName: "error" */ '@/views/errors/403.vue')
+        component: () => import(/* webpackChunkName: "403" */ '@/views/errors/403.vue')
+      },
+      {
+        path: '/401', // TODO we really need this?
+        name: '401',
+        component: () => import(/* webpackChunkName: "401" */ '@/views/errors/401.vue')
       },
       {
         path: '/404',
         name: '404',
-        component: () => import(/* webpackChunkName: "error" */ '@/views/errors/404.vue')
+        component: () => import(/* webpackChunkName: "404" */ '@/views/errors/404.vue')
+      },
+      {
+        path: '/500', // TODO enable this page to receive some details about the error
+        name: '500',
+        component: () => import(/* webpackChunkName: "500" */ '@/views/errors/500.vue')
       }
     ]
   },
@@ -162,13 +174,13 @@ const router = new VueRouter({
   linkExactActiveClass: 'is-active'
 })
 
-// router.beforeEach((to, from, next) => {
-//   const authenticated = store.getters['auth/isAuthenticated']
-//   if (to.matched.some(route => route.meta.authenticated) && !authenticated) {
-//     next({ name: 'login', params: { redirect: to.path } })
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  const token = Vue.prototype.$cookies.get(tokenKey)
+  if (to.matched.some(route => route.meta.authenticated) && token === null) {
+    next({ name: 'login', params: { redirect: to.path } })
+  } else {
+    next()
+  }
+})
 
 export default router

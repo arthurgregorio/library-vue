@@ -58,23 +58,37 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Mixins } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+
+import FormUtilities from '@/mixins/form-utilities.mixin'
 
 import { Credential } from '@/model/administration/credential'
 
-export default Vue.extend({
-  name: 'login' as string,
-  methods: {
-    doLogin() {
-      this.loading = true
-      setTimeout(() => { this.$router.push({ name: 'home' }) }, 3000) // FIXME remover isso depois
-    }
-  },
-  data() {
-    return {
-      loading: false,
-      credential: {} as Credential
-    }
+import TokenModule from '@/store/token.module'
+
+@Component
+export default class Login extends Mixins(FormUtilities) {
+  private credential = new Credential()
+
+  private tokenModule!: TokenModule
+
+  private created(): void {
+    this.tokenModule = getModule(TokenModule, this.$store)
   }
-})
+
+  private doLogin(): void {
+    this.loading = true
+    this.tokenModule.request(this.credential)
+      .then(
+        () => {
+          this.$router.push({ name: 'home' })
+        }, error => {
+          this.shouldLog(error)
+        }
+      ).finally(() => {
+        this.loading = false
+      })
+  }
+}
 </script>

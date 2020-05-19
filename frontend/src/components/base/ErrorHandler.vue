@@ -4,8 +4,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-
-import { AxiosError } from 'axios'
+import { AxiosResponse } from 'axios'
 
 import EventBus from '@/components/event/event-bus'
 
@@ -15,19 +14,46 @@ export default class ErrorHandler extends Vue {
     EventBus.$on('errorCaught', this.displayError)
   }
 
-  public displayError(event: AxiosError): void {
-    const response = event?.response
-    const status = response?.status
-    const data = response?.data
+  public displayError(event: AxiosResponse): void {
+    const status = event?.status
+    const data = event?.data
+
+    /*
+    I'm not proud of this code, but since I can't find any other way to
+    deal with exceptions in a global way (like JSF and his exceptions handlers),
+    this seeems to be the best way to achieve this kind of exception handling
+
+    To let exceptions be caught here, just use the method shouldLog(error)
+    from the form-utilities-mixin, an generic event bus will deliver the
+    error to this component
+    */
 
     if (status === 400) {
       if (!data) {
         this.showToast(this.translate('commons.feedback.bad-request'))
       } else {
-        this.showToast(data?.message, 'is-warning')
+        if (data?.error_description === 'Bad credentials') {
+          this.showToast(this.translate('commons.feedback.bad-credentials'), 'is-warning')
+        } else {
+          this.showToast(data?.message, 'is-warning')
+        }
+      }
+    } else if (status === 401) {
+      if (!data) {
+        this.showToast(this.translate('commons.feedback.bad-request'))
+      } else {
+        if (data?.error === 'invalid_token') {
+          this.$router.push({ name: '401' })
+        } else {
+          this.showToast(data?.message, 'is-warning')
+        }
       }
     } else if (status === 500) {
-      this.showToast(this.translate('commons.feedback.server-error'))
+      if (data.includes('ECONNREFUSED')) {
+        this.showToast(this.translate('commons.feedback.connection-error'))
+      } else {
+        this.showToast(this.translate('commons.feedback.server-error'))
+      }
     }
   }
 

@@ -136,8 +136,8 @@ import { UserClient } from '@/client/administration/user.client'
 
 import { User } from '@/model/administration/user'
 
-import { PageRequest } from '@/model/page-request'
-import { PageResponse } from '@/model/page-response'
+import { PageRequest } from '@/model/utilities/page-request'
+import { PageResponse } from '@/model/utilities/page-response'
 
 @Component
 export default class UsersList extends Mixins(FormUtilities) {

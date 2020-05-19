@@ -1,26 +1,20 @@
 package br.eti.arthurgregorio.library.infrastructure.spring;
 
-import br.eti.arthurgregorio.library.application.components.CurrentUser;
+import br.eti.arthurgregorio.library.domain.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-
-import java.util.Map;
 
 /**
  *
@@ -43,17 +37,23 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private final TokenStore tokenStore;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationService authenticationService;
     private final AuthenticationManager authenticationManager;
 
     /**
      *
-     * @param encoder
-     * @param manager
+     * @param passwordEncoder
+     * @param authenticationService
+     * @param authenticationManager
      */
-    public AuthorizationServerConfiguration(PasswordEncoder encoder, AuthenticationManager manager) {
-        this.passwordEncoder = encoder;
-        this.authenticationManager = manager;
+    public AuthorizationServerConfiguration(PasswordEncoder passwordEncoder,
+                                            AuthenticationService authenticationService,
+                                            AuthenticationManager authenticationManager) {
         this.tokenStore = new InMemoryTokenStore();
+
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationService = authenticationService;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -66,7 +66,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .tokenStore(this.tokenStore)
-                .tokenEnhancer(this.tokenEnhancer())
+                .userDetailsService(this.authenticationService)
                 .authenticationManager(this.authenticationManager);
     }
 
@@ -93,11 +93,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .inMemory()
                     .withClient(this.webClientName)
                         .authorizedGrantTypes("password", "refresh_token")
-                            .scopes("all")
-                        .refreshTokenValiditySeconds(300000)
+                        .scopes("all")
+                        .refreshTokenValiditySeconds(172800) // 48 hours
                         .resourceIds(this.resourceId)
                         .secret(this.passwordEncoder.encode(this.webClientSecret))
-                        .accessTokenValiditySeconds(50000);
+                        .accessTokenValiditySeconds(43200); // 12 hours
     }
 
     /**
@@ -109,33 +109,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public DefaultTokenServices tokenServices() {
         final DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(this.tokenStore);
-        tokenServices.setTokenEnhancer(this.tokenEnhancer());
         return tokenServices;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Bean
-    public TokenEnhancer tokenEnhancer() {
-        return new AuthenticatedUserTokenEnhancer();
-    }
-
-    /**
-     * Token Enhancer to provide user authority info
-     */
-    public static class AuthenticatedUserTokenEnhancer implements TokenEnhancer {
-
-        @Override
-        public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-
-            final var currentUser = (CurrentUser) authentication.getPrincipal();
-            final var token = (DefaultOAuth2AccessToken) accessToken;
-
-            token.setAdditionalInformation(Map.of("authenticated_user", currentUser));
-
-            return token;
-        }
     }
 }

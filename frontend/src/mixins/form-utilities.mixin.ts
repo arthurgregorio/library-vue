@@ -1,7 +1,9 @@
 import { Component, Vue } from 'vue-property-decorator'
-
 import { ValidationObserver } from 'vee-validate'
-import { AxiosError } from 'axios'
+
+import { AxiosResponse } from 'axios'
+
+import EventBus from '@/components/event/event-bus'
 
 @Component
 class FormUtilities extends Vue {
@@ -31,10 +33,8 @@ class FormUtilities extends Vue {
    *
    * @param error response from Axios
    */
-  protected shouldLog(error: AxiosError): void {
-    if (error?.response?.status === 500) {
-      console.log(error.response)
-    }
+  protected shouldLog(error: AxiosResponse): void {
+    EventBus.$emit('errorCaught', error)
   }
 
   /**

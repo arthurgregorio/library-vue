@@ -1,7 +1,7 @@
 <template>
   <div>
     <main-menu />
-    <div class="section">
+    <div id="content" class="section">
       <router-view/>
     </div>
     <error-handler></error-handler>

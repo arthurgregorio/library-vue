@@ -1,4 +1,4 @@
-export interface Credential {
-  username: string;
-  password: string;
+export class Credential {
+  username!: string;
+  password!: string;
 }

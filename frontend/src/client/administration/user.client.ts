@@ -4,14 +4,14 @@ import { AxiosFactory } from '../axios.factory'
 
 import { User } from '@/model/administration/user'
 
-import { PageResponse } from '@/model/page-response'
-import { PageRequest } from '@/model/page-request'
+import { PageResponse } from '@/model/utilities/page-response'
+import { PageRequest } from '@/model/utilities/page-request'
 
 export class UserClient {
   private axiosClient: AxiosInstance
 
   constructor() {
-    this.axiosClient = AxiosFactory.create('/api/users')
+    this.axiosClient = AxiosFactory.create('api/users')
   }
 
   public async save(user: User) {

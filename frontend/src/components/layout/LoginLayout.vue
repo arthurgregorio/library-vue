@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    <error-handler></error-handler>
   </section>
 </template>
 
@@ -21,8 +22,11 @@
 import { FadeTransition } from 'vue2-transitions'
 import { Component, Vue } from 'vue-property-decorator'
 
+import ErrorHandler from '@/components/base/ErrorHandler.vue'
+
 @Component({
   components: {
+    ErrorHandler,
     FadeTransition
   }
 })

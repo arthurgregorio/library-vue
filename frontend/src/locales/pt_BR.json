@@ -55,7 +55,8 @@
     "delete": "Excluir",
     "edit": "Editar",
     "save": "Salvar",
-    "update": "Atualizar"
+    "update": "Atualizar",
+    "logout": "Sair"
   },
   "commons": {
     "text": {
@@ -76,7 +77,9 @@
       "data-deleted": "Registro excluído com sucesso!",
       "delete-message": "Confirma a exclusão do registro?",
       "bad-request": "Sua requisição não pode ser processada, tente novamente",
-      "server-error": "O servidor encontrou uma falha ao processar a requisição, entre em contato com o administrador"
+      "bad-credentials": "Usuário e senha inválidos, tente novamente",
+      "server-error": "O servidor encontrou uma falha ao processar a requisição, entre em contato com o administrador",
+      "connection-error": "O servidor de destino não esta disponível para processar a requisição, entre em contato com o administrador"
     }
   },
   "constants": {
@@ -96,6 +99,14 @@
     "403": {
       "message": "Você não tem permissão para acessar esta página ou recurso",
       "title": "Uhmmm, estamos de olho!"
+    },
+    "401": {
+      "message": "Sua conexão com o servidor não foi autorizada, faça login novamente.",
+      "title": "Não autorizado!"
+    },
+    "500": {
+      "message": "O sistema encontrou um erro da qual não pode ser recuperar, entre em contato com o administrador",
+      "title": "Ops, encontramos um erro bizarro aqui!"
     }
   },
   "login": {

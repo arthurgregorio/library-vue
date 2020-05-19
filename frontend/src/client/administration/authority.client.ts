@@ -4,13 +4,11 @@ import { AxiosFactory } from '../axios.factory'
 
 import { Authority } from '@/model/administration/authority'
 
-import { PageResponse } from '@/model/page-response'
-
 export class AuthorityClient {
   private axiosClient: AxiosInstance
 
   constructor() {
-    this.axiosClient = AxiosFactory.create('/api/authorities')
+    this.axiosClient = AxiosFactory.create('api/authorities')
   }
 
   public async findAll(): Promise<Array<Authority>> {

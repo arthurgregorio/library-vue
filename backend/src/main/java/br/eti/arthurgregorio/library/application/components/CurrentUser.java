@@ -3,6 +3,7 @@ package br.eti.arthurgregorio.library.application.components;
 import br.eti.arthurgregorio.library.domain.entities.administration.Grant;
 import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -73,6 +74,7 @@ public class CurrentUser implements UserDetails {
      *
      * @return
      */
+    @JsonProperty("authorities")
     public List<String> getGrants() {
         return this.authorities.stream()
                 .map(GrantedAuthority::getAuthority)
