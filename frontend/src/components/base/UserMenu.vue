@@ -1,7 +1,7 @@
 <template>
   <b-dropdown position="is-bottom-left" append-to-body aria-role="menu" trap-focus>
     <button class="button" slot="trigger" slot-scope="{ active }">
-      <span>Administrator</span>
+      <span v-if="authenticationModule.principalName" >{{ authenticationModule.principalName }}</span>
       <b-icon pack='fas' size="is-small" :icon="active ? 'angle-up' : 'angle-down'"></b-icon>
     </button>
     <b-dropdown-item aria-role="listitem">
@@ -20,23 +20,26 @@ import Vue from 'vue'
 
 import { getModule } from 'vuex-module-decorators'
 
-import TokenModule from '@/store/token.module'
+import AuthenticationModule from '@/store/authentication.module'
 
 export default Vue.extend({
   name: 'user-menu' as string,
   methods: {
     doLogout() {
-      this.tokenModule.destroy()
+      this.authenticationModule.logout()
       this.$router.push({ name: 'login' })
     }
   },
-  created(): void {
-    this.tokenModule = getModule(TokenModule, this.$store)
-  },
   data() {
     return {
-      tokenModule: {} as TokenModule
+      authenticationModule: {} as AuthenticationModule
     }
+  },
+  mounted() {
+    this.authenticationModule.load()
+  },
+  created(): void {
+    this.authenticationModule = getModule(AuthenticationModule, this.$store)
   }
 })
 </script>

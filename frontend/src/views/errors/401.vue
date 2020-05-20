@@ -25,23 +25,23 @@ import Vue from 'vue'
 
 import { getModule } from 'vuex-module-decorators'
 
-import TokenModule from '@/store/token.module'
+import AuthenticationModule from '@/store/authentication.module'
 
 export default Vue.extend({
   name: 'error-401' as string,
   methods: {
     doLogout() {
-      this.tokenModule.destroy()
+      this.authenticationModule.logout()
       this.$router.push({ name: 'login' })
     }
   },
   data() {
     return {
-      tokenModule: {} as TokenModule
+      authenticationModule: {} as AuthenticationModule
     }
   },
   created(): void {
-    this.tokenModule = getModule(TokenModule, this.$store)
+    this.authenticationModule = getModule(AuthenticationModule, this.$store)
   }
 })
 </script>

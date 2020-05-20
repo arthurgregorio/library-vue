@@ -65,24 +65,31 @@ import FormUtilities from '@/mixins/form-utilities.mixin'
 
 import { Credential } from '@/model/administration/credential'
 
-import TokenModule from '@/store/token.module'
+import AuthenticationModule from '@/store/authentication.module'
 
 @Component
 export default class Login extends Mixins(FormUtilities) {
   private credential = new Credential()
 
-  private tokenModule!: TokenModule
+  private authenticationModule!: AuthenticationModule
+
+  private mounted(): void {
+    this.authenticationModule.load()
+    if (this.authenticationModule.isAuthenticated) {
+      this.$router.push({ name: 'home' })
+    }
+  }
 
   private created(): void {
-    this.tokenModule = getModule(TokenModule, this.$store)
+    this.authenticationModule = getModule(AuthenticationModule, this.$store)
   }
 
   private doLogin(): void {
     this.loading = true
-    this.tokenModule.request(this.credential)
+    this.authenticationModule.login(this.credential)
       .then(
         () => {
-          this.$router.push({ name: 'home' })
+          this.$router.push(this.$router.currentRoute.params.redirect || { name: 'home' })
         }, error => {
           this.shouldLog(error)
         }

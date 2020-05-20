@@ -4,6 +4,7 @@ import { AxiosFactory } from '../axios.factory'
 
 import { Token } from '@/model/administration/token'
 import { Credential } from '@/model/administration/credential'
+import { apiClientId, apiClientSecret } from '@/model/utilities/configurations'
 
 export class TokenClient {
   private axios: AxiosInstance
@@ -16,8 +17,8 @@ export class TokenClient {
     return {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       auth: {
-        username: 'library-web',
-        password: 'library-web'
+        username: apiClientId,
+        password: apiClientSecret
       }
     }
   }

@@ -39,15 +39,9 @@ export default class ErrorHandler extends Vue {
         }
       }
     } else if (status === 401) {
-      if (!data) {
-        this.showToast(this.translate('commons.feedback.bad-request'))
-      } else {
-        if (data?.error === 'invalid_token') {
-          this.$router.push({ name: '401' })
-        } else {
-          this.showToast(data?.message, 'is-warning')
-        }
-      }
+      this.$router.push({ name: '401' })
+    } else if (status === 403) {
+      this.$router.push({ name: '403' })
     } else if (status === 500) {
       if (data.includes('ECONNREFUSED')) {
         this.showToast(this.translate('commons.feedback.connection-error'))

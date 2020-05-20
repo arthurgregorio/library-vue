@@ -1,9 +1,8 @@
 import Vue from 'vue'
+
 import Axios, { AxiosInstance } from 'axios'
 
-import { apiBaseUrl, tokenKey } from '@/model/utilities/configurations'
-
-import { Token } from '@/model/administration/token'
+import { apiBaseUrl, userSessionKey } from '@/model/utilities/configurations'
 
 export class AxiosFactory {
   public static create(requestPath: string, requireAuth = true): AxiosInstance {
@@ -24,7 +23,7 @@ export class AxiosFactory {
   }
 
   public static getAccessToken(): string {
-    const token: Token = Vue.prototype.$cookies.get(tokenKey)
-    return token !== null ? token.access_token : ''
+    const userSession = Vue.prototype.$cookies.get(userSessionKey)
+    return userSession !== null ? userSession.token.access_token : ''
   }
 }

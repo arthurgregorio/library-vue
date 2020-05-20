@@ -1,7 +1,8 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
 
-import { tokenKey } from '@/model/utilities/configurations'
+import VueRouter, { RouteConfig, Route } from 'vue-router'
+
+import { userSessionKey, authorities } from '@/model/utilities/configurations'
 
 import DefaultLayout from '@/components/layout/DefaultLayout.vue'
 
@@ -12,17 +13,6 @@ import RegistrationLayout from '@/components/layout/RegistrationLayout.vue'
 import AdministrationLayout from '@/components/layout/AdministrationLayout.vue'
 
 Vue.use(VueRouter)
-
-// const checkPermission = (to: any, from: any, next: any) => {
-//   const userGrants = store.getters['auth/userGrants']
-//   const requiredAuthorizations = to.meta.authorizations
-//   const authorized = userGrants.some(grant => requiredAuthorizations.includes(grant))
-//   if (authorized) {
-//     next()
-//   } else {
-//     next({ name: '403' })
-//   }
-// }
 
 const routes: Array<RouteConfig> = [
   {
@@ -83,33 +73,48 @@ const routes: Array<RouteConfig> = [
           {
             path: '',
             name: 'users',
-            meta: { authenticated: true },
+            meta: {
+              authenticated: true,
+              authorizations: [authorities.admin]
+            },
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UsersList.vue')
           },
           {
             path: 'add',
             name: 'users.add',
-            meta: { authenticated: true },
+            meta: {
+              authenticated: true,
+              authorizations: [authorities.admin]
+            },
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserForm.vue')
           },
           {
             props: true,
             path: ':id/detail',
             name: 'users.detail',
-            meta: { authenticated: true },
+            meta: {
+              authenticated: true,
+              authorizations: [authorities.admin]
+            },
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserDetail.vue')
           },
           {
             path: ':id/edit',
             name: 'users.edit',
-            meta: { authenticated: true },
+            meta: {
+              authenticated: true,
+              authorizations: [authorities.admin]
+            },
             props: (route) => ({ id: route.params.id, editing: true }),
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserForm.vue')
           },
           {
             path: ':id/delete',
             name: 'users.delete',
-            meta: { authenticated: true },
+            meta: {
+              authenticated: true,
+              authorizations: [authorities.admin]
+            },
             props: (route) => ({ id: route.params.id, deleting: true }),
             component: () => import(/* webpackChunkName: "users" */ '@/views/administration/users/UserDetail.vue')
           }
@@ -139,12 +144,12 @@ const routes: Array<RouteConfig> = [
     component: DefaultLayout,
     children: [
       {
-        path: '/403', // TODO when the user has no permissions, improve the feedback
+        path: '/403',
         name: '403',
         component: () => import(/* webpackChunkName: "403" */ '@/views/errors/403.vue')
       },
       {
-        path: '/401', // TODO we really need this?
+        path: '/401',
         name: '401',
         component: () => import(/* webpackChunkName: "401" */ '@/views/errors/401.vue')
       },
@@ -174,9 +179,9 @@ const router = new VueRouter({
   linkExactActiveClass: 'is-active'
 })
 
-router.beforeEach((to, from, next) => {
-  const token = Vue.prototype.$cookies.get(tokenKey)
-  if (to.matched.some(route => route.meta.authenticated) && token === null) {
+router.beforeEach((to: Route, from: Route, next: Function) => {
+  const userSession = Vue.prototype.$cookies.get(userSessionKey)
+  if (to.matched.some(route => route.meta.authenticated) && userSession === null) {
     next({ name: 'login', params: { redirect: to.path } })
   } else {
     next()
