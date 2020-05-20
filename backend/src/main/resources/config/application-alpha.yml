@@ -6,7 +6,7 @@ library:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/library_vue
+    url: jdbc:postgresql://localhost:5432/library-vue
     username: sa_library_vue
     password: sa_library_vue
 

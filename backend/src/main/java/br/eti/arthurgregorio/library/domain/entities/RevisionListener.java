@@ -37,6 +37,10 @@ public class RevisionListener implements org.hibernate.envers.RevisionListener {
      */
     private String getLoggedUser() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return StringUtils.isNotBlank(authentication.getName()) ? authentication.getName() : "anonymous";
+        if (authentication != null) {
+            return StringUtils.isNotBlank(authentication.getName()) ? authentication.getName() : "anonymous";
+        } else {
+            return "anonymous";
+        }
     }
 }
