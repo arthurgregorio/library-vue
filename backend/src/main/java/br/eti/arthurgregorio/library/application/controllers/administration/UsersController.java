@@ -1,17 +1,14 @@
 package br.eti.arthurgregorio.library.application.controllers.administration;
 
+import br.eti.arthurgregorio.library.application.components.security.Administrator;
 import br.eti.arthurgregorio.library.domain.dto.UserForm;
 import br.eti.arthurgregorio.library.domain.dto.validation.Adding;
 import br.eti.arthurgregorio.library.domain.dto.validation.Editing;
-import br.eti.arthurgregorio.library.domain.entities.administration.Authority;
-import br.eti.arthurgregorio.library.domain.entities.administration.Grant;
 import br.eti.arthurgregorio.library.domain.entities.administration.User;
 import br.eti.arthurgregorio.library.domain.repositories.administration.UserRepository;
 import br.eti.arthurgregorio.library.domain.services.UserService;
 import br.eti.arthurgregorio.library.infrastructure.misc.RestPreconditions;
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static org.apache.commons.lang3.StringUtils.remove;
 
 /**
  *
@@ -62,6 +54,7 @@ public class UsersController {
      * @return
      */
     @GetMapping
+    @Administrator
     public ResponseEntity<Page<User>> get(@RequestParam String filter, Pageable pageable) {
         return RestPreconditions.checkFound(this.userRepository.findByFilter(filter, pageable));
     }
@@ -71,6 +64,7 @@ public class UsersController {
      * @param userId
      * @return
      */
+    @Administrator
     @GetMapping("/{userId}")
     public ResponseEntity<UserForm> getById(@PathVariable Long userId) {
         return this.userRepository.findById(userId)
@@ -84,6 +78,7 @@ public class UsersController {
      * @return
      */
     @PostMapping
+    @Administrator
     public ResponseEntity<User> save(@RequestBody @Validated(Adding.class) UserForm model) {
         this.userService.save(this.modelMapper.map(model, User.class), model.getAuthorities());
         return ResponseEntity.ok().build();
@@ -95,6 +90,7 @@ public class UsersController {
      * @param model
      * @return
      */
+    @Administrator
     @PutMapping("/{userId}")
     public ResponseEntity<UserForm> update(@PathVariable long userId,
                                            @RequestBody @Validated(Editing.class) UserForm model) {
@@ -112,6 +108,7 @@ public class UsersController {
      * @param id
      * @return
      */
+    @Administrator
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         return this.userRepository.findById(id).map(user -> {
